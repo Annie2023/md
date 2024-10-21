@@ -12,3 +12,7 @@ https://wdblink.github.io/2019/03/24/如何将本地的项目一键同步到GitH
 
 
 [如何将本地的项目一键同步到GitHub - 尹鹏宇的博客 | Yean's Blog (wdblink.github.io)](https://wdblink.github.io/2019/03/24/如何将本地的项目一键同步到GitHub/)
+
+# github在push时报错大文件，删除后依然报错
+
+[【Git】github在push时报错大文件，删除后依然报错_this is larger than github's recommended maximum f-CSDN博客](https://blog.csdn.net/qq_43915356/article/details/113619750)
