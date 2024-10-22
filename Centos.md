@@ -163,8 +163,8 @@ Listen 192.168.06.4:81
 修改根目录
 
 ```html
-#Document "/var/www/html"
-Document "/var/www/myweb"
+#DocumentRoot "/var/www/html"
+DocumentRoot "/var/www/myweb"
 <Directory "/var/www/myweb">
     Options Indexes FollowSymLinks
     AllowOverride None
@@ -172,7 +172,7 @@ Document "/var/www/myweb"
 </Directory>
 
 在ifmoudle中增加访问页面
-index.jsp index.php index. htm
+index.jsp index.php index.htm
 
 配置字符编码改为GB2312
 AddDefaultcharset GB2312
@@ -190,17 +190,171 @@ Alias /OA/ "/var/www/OA/"
 :wq!退出
 
 vim /etc/httpd/conf.d/a.conf
-<VirtualHost 190.168.06.6:80>
-DocumentRoot "/var/www/html"
-ServerName 190.168.06.6
-<Directory>
-Order allow.deny
-Allow from 190.168.06.0/24
+编辑内容如下：
+<VirtualHost 192.168.06.6:80>
+DocumentRoot "/var/www/www1"
+ServerName 192.168.06.6
+<Directory "/var/www/www1">
+Order allow,deny
+Allow from 192.168.06.0/24
 </Directory>
 DirectoryIndex index.html
-Erroring "/var/www/www1/web1-access_log"
-Customlog "/var/www/www1/web1-access_log" common
-    
+Errorlog "/var/www/www1/web1-access_log"
+Customlog "/var/www/www1/web1-access_log" common   
 </VirtualHost>
+
+<VirtualHost 192.168.06.8:80>
+DocumentRoot "/var/www/www2"
+ServerName 192.168.06.8
+<Directory "/var/www/www2">
+Order allow,deny
+Allow from 192.168.06.0/24
+</Directory>
+DirectoryIndex index.html
+Errorlog "/var/www/www2/web2-access_log"
+Customlog "/var/www/www2/web2-access_log" common   
+</VirtualHost>
+
+
+:wq
+
+创建目录：
+mkdir /var/www/OA
+mkdir /var/www/www1
+mkdir /var/www/www2
+mkdir /var/www/myweb
+
+编辑一下内容：
+vim /var/www/OA/index.html
+vim /var/www/www1/index.html
+vim /var/www/www2/index.html
+vim /var/www/myweb/index.html
+
+OA权限：
+配置名称：
+vim /var/www/OA/.htaccess
+AuthName "Test"
+AuthType Basic
+AuthuserFile "conf/OAuser"
+Require user admin
+
+配置验证密码：
+htpasswd -c /etc/httpd/conf/OAuser admin
+admin
+
+systemctl start httpd.service
+
+(如果打不开http服务)httpd -t
+
+配置完每次重启
+
+systemctl restart httpd.service
 ```
+
+![image-20241022172826374](C:\Users\Annie\AppData\Roaming\Typora\typora-user-images\image-20241022172826374.png)
+
+![image-20241022172751553](C:\Users\Annie\AppData\Roaming\Typora\typora-user-images\image-20241022172751553.png)
+
+关闭防火墙
+
+systemctl stop firewalld
+
+
+
+注意：重启机子后需要重新配置ifconfig！！！！（ifconfig清空了）
+
+配置完之后访问192.168.6.4:81/OA 报Internal error
+
+修改方法：在计算机里面搜索error_log查看错误日志
+
+![image-20241022210313005](C:\Users\Annie\AppData\Roaming\Typora\typora-user-images\image-20241022210313005.png)
+
+发现配置重复了
+
+修改.htaccess文件中：为AuthuserFile "conf/OAuser"
+
+
+
+# ftp配置
+
+下载vsftp包
+
+rpm -q vsftpd
+
+yum -y install vsftpd 
+
+启动服务
+
+systemctl start vsftpd
+
+设置静态ip：192.168.6.16  子网掩码：255.255.255.0
+
+本机可以ping成功
+
+```
+vim /etc/vsftpd/vsftpd.conf
+
+修改
+anon_upload_enable=NO   #禁止匿名用户上传
+userlist_enable=NO #白名单关掉
+
+写入
+anon_mkdir_write_enable=NO
+anon_other_write_enable=NO
+anon_root=/var/ftp/doc
+anon_world_readable_only=YES
+启用服务器参数：
+max_clients=100
+max_per_ip=2
+pasv_enable=YES  //被动模式开启
+pasv_min_port=45000
+pasv_max_port=49000
+
+创建匿名用户文件夹
+mkdir /var/ftp/doc
+vim /var/ftp/doc/1.txt
+1234564564684
+
+重启服务 
+systemctl restart vsftpd
+systemctl status vsftpd
+
+测试：
+（1）可以控制台ftp命令
+需要安装
+yum install -y ftp
+(2)文件资源管理
+其他位置->连接到服务器->ftp://192.168.6.16
+验证
+匿名可下载不可上传
+```
+
+```
+实现本地用户要求：约束本地用户在自己test目录下（就是其他用户不限制，只有test限制）
+创建本地用户
+useradd -d /home/test -m test
+passwd test
+123
+123
+vim /etc/vsftpd/vsftpd.conf
+chroot
+修改
+chroot_local_user=NO #限制
+chroot_list_enable=YES  #开白名单
+chroot_list_file ....#开黑名单
+
+写入
+allow_writeable_chroot=YES
+
+编辑黑名单用户
+vim /etc/vsftpd/chroot_list
+test
+
+systemctl restart vsftpd
+
+注：要一直忘记密码，取消登录状态
+
+```
+
+
 
