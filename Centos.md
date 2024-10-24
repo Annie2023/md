@@ -139,6 +139,9 @@ systemctl stop httpd.service
 
 ```
 setenforce 0
+
+关闭防火墙
+systemctl stop firewalld
 ```
 
 ## 任务一
@@ -255,10 +258,6 @@ systemctl restart httpd.service
 
 ![image-20241022172751553](C:\Users\Annie\AppData\Roaming\Typora\typora-user-images\image-20241022172751553.png)
 
-关闭防火墙
-
-systemctl stop firewalld
-
 
 
 注意：重启机子后需要重新配置ifconfig！！！！（ifconfig清空了）
@@ -272,6 +271,137 @@ systemctl stop firewalld
 发现配置重复了
 
 修改.htaccess文件中：为AuthuserFile "conf/OAuser"
+
+## 任务二
+
+```
+xrandr
+xrandr -s 1152X864
+yum -y install httpd(已经装了)
+systemctl restart httpd
+vim /etc/sysconfig/network-scripts/ifcfg-ens33
+```
+
+### 不同IP
+
+```html
+vim /etc/sysconfig/network-scripts/ifcfg-ens33
+
+写入
+IFADDR1=192.168.xxxx 245.147
+
+systemctl restart network
+ifconfig
+ping -c 4 192.168.245.147
+ping -c 4 192.168.245.146
+
+vim /etc/httpd/conf/httpd.conf
+
+写入
+
+<VirtualHost 192.168.245.146:80>
+    DocumentRoot  /var/www/web1
+    ServerName 192.168.245.146 
+</VirtualHost>
+<VirtualHost 192.168.245.147:80>
+    DocumentRoot  /var/www/web2
+    ServerName 192.168.245.147 
+</VirtualHost>
+
+:wq
+
+mkdir /var/www/web1
+mkdir /var/www/web2
+vim /var/www/web1/index.html
+vim /var/www/web2/index.html
+
+systemctl restart httpd
+
+分别访问192.168.245.146:80
+192.168.245.147:80
+```
+
+### 不同主机
+
+```html
+vim /etc/sysconfig/network.scripts/ifcfg-ens33
+DNS1=192.168.245.146
+DOMAIN=stu.com
+
+yum -y install bind(装了)
+rpm -q bind
+
+这里修改ifcfg文件之后可能会安装不成功（改成联网状态或者按照一下修改ifcfg文件）
+注释掉
+#IPADDR
+#NETMASK
+#GATEWAY
+#DNS1
+#DOMAIN
+修改
+BOOTPROTO=dhcp
+保存
+
+systemctl restart network
+systemctl start named
+
+vim /etc/named.conf
+listen on port 改为192.168.245.146
+allow-deny改为any
+
+vim /etc/named.rfc1912.zones
+修改
+zone "localhost.localdomain" IN{
+xxx
+}
+为
+zone "stu.com" IN{
+    xxxx（不变）
+    file "stu.com.zone"
+    xxxx（不变）
+}
+zone "245.168.192.in-addr.arpa" IN{
+    xxxx（不变）
+    file "stu.com.zero"
+    xxxx（不变）
+}
+
+cd /var/named
+ll
+cp -p /var/named/named.localhost /var/named/stu.com.zone
+cp -p /var/named/named.loopback /var/named/stu.com.zero
+vim /var/named/stu.com.zone
+修改
+$TTL 1D
+@	IN SOA	dns.stu.com. (
+					0	; serial
+					1D	; refresh
+					1H	; retry
+					1W	; expire
+					3H )	; minimum
+@	IN 	NS	dns.stu.com.
+dns 	IN 	A 	192.168.245.146
+www1	IN 	A 	192.168.245.146
+www2	IN 	A 	192.168.245.147
+
+vim /var/named/stu.com.zero
+
+$TTL 1D
+@	IN SOA	dns.stu.com. (
+					0	; serial
+					1D	; refresh
+					1H	; retry
+					1W	; expire
+					3H )	; minimum
+@	IN 	NS	dns.stu.com.
+146  IN 	PTR     www1.stu.com.
+147  IN 	PTR 	www2.stu.com.
+
+systemctl restart named
+systemctl restart httpd
+```
+
+
 
 
 
@@ -355,6 +485,4 @@ systemctl restart vsftpd
 注：要一直忘记密码，取消登录状态
 
 ```
-
-
 
