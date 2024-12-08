@@ -25,3 +25,10 @@ javascript原型链污染
 https://www.cnblogs.com/hackerone/p/17536668.html
 ```
 
+## ezbypass-cat白名单目录穿透
+
+
+
+用到的工具
+
+目录扫描dirsearch
