@@ -9,7 +9,11 @@ git config --global user.name
 https://wdblink.github.io/2019/03/24/如何将本地的项目一键同步到GitHub/
 ```
 
-
+```
+git add .
+git commit -m "提交说明"
+git push origin master
+```
 
 [如何将本地的项目一键同步到GitHub - 尹鹏宇的博客 | Yean's Blog (wdblink.github.io)](https://wdblink.github.io/2019/03/24/如何将本地的项目一键同步到GitHub/)
 

@@ -1,0 +1,184 @@
+{
+  "main": {
+    "id": "e83addea96d6c3c8",
+    "type": "split",
+    "children": [
+      {
+        "id": "f59cc929b015d9ca",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5bcb7a2cc4a18736",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "cuit信息搜集.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "cuit信息搜集"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "101e563aed04f686",
+    "type": "split",
+    "children": [
+      {
+        "id": "f745bbbc90650672",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "26ae8a6e38a72d77",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "063ca93ee57cd118",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "cui",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "ce2f3f8442fc8ff9",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "713ec1a24f8bc9a2",
+    "type": "split",
+    "children": [
+      {
+        "id": "e319d5e0a4d037a7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "99f13bd993b23cf8",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "个人博客搭建.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "个人博客搭建 的反向链接列表"
+            }
+          },
+          {
+            "id": "d64afc8cdec13e07",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "个人博客搭建.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "个人博客搭建 的出链列表"
+            }
+          },
+          {
+            "id": "494e00d1975c27aa",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "93be712484cb3305",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "个人博客搭建.md"
+              },
+              "icon": "lucide-list",
+              "title": "个人博客搭建 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false
+    }
+  },
+  "active": "5bcb7a2cc4a18736",
+  "lastOpenFiles": [
+    "I{9_%D(T3[{M0)TBEAJ~XZD.jpg",
+    "os.md",
+    "个人博客搭建.md",
+    "cuit信息搜集.md",
+    "Pasted image 20250630162911.png",
+    "Pasted image 20250630162845.png",
+    "Pasted image 20250630161050.png",
+    "Pasted image 20250630154846.png",
+    "Pasted image 20250630154708.png",
+    "代码安全审计.md",
+    "操作系统.md",
+    "病毒.md",
+    "kali安装nesssus破解版，实现无限制IP扫描.md",
+    "新思想复习.md",
+    "夏日饮料.md"
+  ]
+}
